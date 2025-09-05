@@ -37,9 +37,9 @@ Includes a sample **ERC20 smart contract**, deployment script, and unit tests wi
 3. **Run Tests** 
     ```bash
     npm test
-## ⚡ Deploy Locally (Hardhat network)
+4. **Deploy Locally (Hardhat network)** 
     ```bash
-      npx hardhat run scripts/deploy.ts
+    npx hardhat run scripts/deploy.ts
 
 ## 🚀 Tech Stack
 -  Solidity (v0.8.20)
