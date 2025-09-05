@@ -94,27 +94,26 @@ Includes a sample **ERC20 smart contract**, deployment script, linting setup, an
 
 Install dev tooling for linting, formatting, Solidity rules and test reports:
 
-## Test report tooling (Mochawesome) 
-    ```bash
-     npm i -D mochawesome@7 mochawesome-merge@4 mochawesome-report-generator@6 \
+1. **Test report tooling (Mochawesome) **
+   ```bash
+   npm i -D mochawesome@7 mochawesome-merge@4 mochawesome-report-generator@6 \
          mocha-junit-reporter mocha-multi-reporters
-
-## For cross-platform shell (mkdir/cp on Windows)
-npm i -D shx
-
-# ---- Linting & formatting (TS/JS) ----
-npm i -D eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin \
+2. **For cross-platform shell (mkdir/cp on Windows)** 
+    ```bash
+    npm i -D shx
+3. **Linting & formatting (TS/JS)** 
+    ```bash
+    npm i -D eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin \
          prettier eslint-config-prettier eslint-plugin-prettier
-
-# ---- Git hooks (run linters before commit) ----
-npm i -D husky lint-staged
-npx husky init
-echo "npx lint-staged" >> .husky/pre-commit
-
-# ---- Solidity linting ----
-npm i -D solhint solhint-plugin-prettier
-npx solhint --init
-
+4. **Git hooks (run linters before commit)** 
+    ```bash
+    npm i -D husky lint-staged
+    npx husky init
+    echo "npx lint-staged" >> .husky/pre-commit
+5. **Solidity linting** 
+    ```bash
+   npm i -D solhint solhint-plugin-prettier
+   npx solhint --init
 
 ## 🚀 Tech Stack
 -  Solidity (v0.8.20)
