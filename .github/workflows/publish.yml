@@ -1,0 +1,41 @@
+name: Publish Mochawesome report
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Run tests (Hardhat)
+        run: npm test
+
+      - name: Build Mochawesome HTML
+        run: npm run test:report
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: mochawesome-report
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
