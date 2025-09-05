@@ -1,6 +1,10 @@
 # 🧪 todor-stavrev-qa-blockchain-tests 
 ![CI](https://github.com/tosheto/todor-stavrev-qa-blockchain-tests/actions/workflows/ci.yml/badge.svg)
 [![Coverage](https://github.com/tosheto/todor-stavrev-qa-blockchain-tests/actions/workflows/coverage.yml/badge.svg?branch=main)](https://github.com/tosheto/todor-stavrev-qa-blockchain-tests/actions/workflows/coverage.yml)
+![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
+![Node](https://img.shields.io/badge/node-20.x-informational)
+![Hardhat](https://img.shields.io/badge/hardhat-2.26.x-yellow)
+
 
 
 
