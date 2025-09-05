@@ -1,4 +1,4 @@
-name: Publish Mochawesome report
+name: "ci-pages: publish mochawesome report to GitHub Pages"
 
 on:
   push:
@@ -10,8 +10,12 @@ permissions:
   pages: write
   id-token: write
 
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
 jobs:
-  publish:
+  test-and-report:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -24,18 +28,25 @@ jobs:
           cache: npm
 
       - name: Install deps
-        run: npm ci
+        run: npm install
 
-      - name: Run tests (Hardhat)
+      - name: Run tests (produce mochawesome JSON)
         run: npm test
 
-      - name: Build Mochawesome HTML
-        run: npm run test:report
+      - name: Merge & build HTML report
+        run: |
+          mkdir -p reports/mocha
+          npx mochawesome-merge "reports/mocha/*.json" -o reports/mocha/report.json
+          npx marge reports/mocha/report.json -f report -d reports/mocha
+          # направи index.html за GitHub Pages
+          cp reports/mocha/report.html reports/mocha/index.html
 
-      - name: Upload Pages artifact
+      - name: Upload artifact for Pages
         uses: actions/upload-pages-artifact@v3
         with:
-          path: mochawesome-report
+          path: reports/mocha
 
       - name: Deploy to GitHub Pages
+        id: deploy
         uses: actions/deploy-pages@v4
+
