@@ -20,14 +20,6 @@
 Smart contract QA project using **Hardhat**, **TypeScript**, **Chai** and **TypeChain** for automated and manual testing.  
 Includes a sample **ERC20 smart contract**, deployment script, and unit tests with gas usage metrics.
 
-<p align="center">
-  <a href="https://tosheto.github.io/todor-stavrev-qa-blockchain-tests/">
-    <img src="docs/screenshots/report-cover.png" alt="Open Live Test Report" width="820">
-  </a>
-  <br/>
-  <sub>Кликни изображението, за да отвориш Live Test Report</sub>
-</p>
-
 ---
 ## 📸 Screenshots
 
