@@ -36,7 +36,15 @@ Includes a sample **ERC20 smart contract**, deployment script, and unit tests wi
 - Unit tests with Chai + Hardhat Chai Matchers  
 - Type-safe contract interactions via TypeChain  
 - Gas usage and deployment cost reporting  
-- Ready for CI/CD and GitHub Actions integration  
+- **Mochawesome** test reports with HTML + JSON output  
+- **Coverage reports** (HTML, LCOV, JSON) via `solidity-coverage`  
+- Automatic coverage upload to **Codecov**  
+- **GitHub Pages** publishing of live test reports  
+- Ready-to-use **CI/CD workflows**:
+  - ✅ Tests
+  - ✅ Coverage + Codecov upload
+  - ✅ CodeQL security scan
+  - ✅ GitHub Pages deploy of Mochawesome report  
 
 ---
 
@@ -45,6 +53,8 @@ Includes a sample **ERC20 smart contract**, deployment script, and unit tests wi
 - `scripts/` → Deployment scripts  
 - `test/` → Automated tests in TypeScript  
 - `typechain-types/` → Auto-generated TypeChain typings  
+- `reports/` → Test + coverage outputs (Mochawesome, LCOV, JUnit)  
+- `.github/workflows/` → CI/CD workflows for GitHub Actions  
 - `hardhat.config.ts` → Hardhat configuration  
 
 ---
