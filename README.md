@@ -34,3 +34,19 @@ Includes a sample **ERC20 smart contract**, deployment script, and unit tests wi
     ```bash
    npx hardhat compile
 
+## ⚡ Run Tests
+    ```bash
+   npm test
+## ⚡ Deploy Locally (Hardhat network)
+    ```bash
+    npx hardhat run scripts/deploy.ts
+
+## 🚀 Tech Stack
+-  Solidity (v0.8.20)
+-  Hardhat (with toolbox)
+-  TypeScript
+-  Chai + Hardhat Chai Matchers
+-  TypeChain (ethers v6 bindings)
+
+## 📂 License
+-  This project is licensed under the MIT License.
