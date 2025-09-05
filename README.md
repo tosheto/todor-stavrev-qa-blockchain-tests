@@ -4,6 +4,14 @@ Smart contract QA project using **Hardhat**, **TypeScript**, **Chai** and **Type
 Includes a sample **ERC20 smart contract**, deployment script, and unit tests with gas usage metrics.
 
 ---
+## 📸 Screenshots
+
+### ✅ Passing tests
+![Tests Screenshot](docs/screenshots/tests-passing.png)
+
+### 📊 Gas usage report
+![Gas Report](docs/screenshots/gas-report.png)
+
 
 ## 🚀 Features
 - Hardhat setup with TypeScript support  
