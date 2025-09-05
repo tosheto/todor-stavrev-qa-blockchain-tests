@@ -6,7 +6,12 @@
 ![Hardhat](https://img.shields.io/badge/hardhat-2.26.x-yellow)
 ![CodeQL](https://github.com/tosheto/todor-stavrev-qa-blockchain-tests/actions/workflows/codeql.yml/badge.svg)
 
-[▶ Live Test Report](https://tosheto.github.io/todor-stavrev-qa-blockchain-tests/)
+<div align="center">
+
+[![Live Test Report](https://img.shields.io/badge/▶%20Live%20Test%20Report-Open%20now-blueviolet?logo=githubpages&logoColor=white)](https://tosheto.github.io/todor-stavrev-qa-blockchain-tests/)
+
+</div>
+
 
 Smart contract QA project using **Hardhat**, **TypeScript**, **Chai** and **TypeChain** for automated and manual testing.  
 Includes a sample **ERC20 smart contract**, deployment script, and unit tests with gas usage metrics.
