@@ -1,4 +1,5 @@
-# 🧪 todor-stavrev-qa-blockchain-tests ![CI](https://github.com/tosheto/todor-stavrev-qa-blockchain-tests/actions/workflows/ci.yml/badge.svg)
+# 🧪 todor-stavrev-qa-blockchain-tests 
+![CI](https://github.com/tosheto/todor-stavrev-qa-blockchain-tests/actions/workflows/ci.yml/badge.svg)
 ![Coverage](https://github.com/tosheto/todor-stavrev-qa-blockchain-tests/actions/workflows/coverage.yml/badge.svg)
 
 
