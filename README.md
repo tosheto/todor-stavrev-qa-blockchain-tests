@@ -15,7 +15,7 @@
 </div>
 
 > [!IMPORTANT]
-> **▶ Live Test Report:** Виж резултатите **на живо** → https://tosheto.github.io/todor-stavrev-qa-blockchain-tests/
+> **▶ Live Test Report:** → https://tosheto.github.io/todor-stavrev-qa-blockchain-tests/
 
 Smart contract QA project using **Hardhat**, **TypeScript**, **Chai** and **TypeChain** …
 
