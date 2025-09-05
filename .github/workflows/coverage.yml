@@ -25,14 +25,29 @@ jobs:
 
       - name: Run Solidity coverage
         run: npm run coverage
+        # by default solidity-coverage generates:
+        #   coverage/ (HTML) + coverage/lcov.info + coverage.json
 
-      - name: Upload coverage artifacts (HTML + JSON)
+      - name: Upload coverage artifacts (HTML + JSON + LCOV)
         uses: actions/upload-artifact@v4
         with:
           name: solidity-coverage
           path: |
             coverage/
             coverage.json
+            coverage/lcov.info
+
+      # --- Codecov upload ---
+      - name: Upload to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          files: coverage/lcov.info, coverage.json
+          flags: solidity,hardhat
+          name: solidity-coverage
+          fail_ci_if_error: true
+          verbose: true
+          # For private repo add secret CODECOV_TOKEN adn uncomment the row:
+          # token: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Publish coverage summary
         run: |

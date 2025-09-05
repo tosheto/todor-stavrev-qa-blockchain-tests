@@ -9,6 +9,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -25,5 +26,34 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Run tests
-        run: npm test
+      - name: Run tests with reporters
+        run: npx hardhat test
+
+      - name: Upload JUnit results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: junit-results
+          path: reports/junit/test-results.xml
+
+      - name: Upload Mochawesome HTML
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mochawesome-report
+          path: reports/mochawesome
+
+      - name: Publish test summary
+        if: always()
+        run: |
+          echo "## Test Summary" >> $GITHUB_STEP_SUMMARY
+          if [ -f reports/junit/test-results.xml ]; then
+            echo "JUnit report generated ✅" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "JUnit report missing ⚠️" >> $GITHUB_STEP_SUMMARY
+          fi
+          if [ -f reports/mochawesome/report.html ]; then
+            echo "Mochawesome HTML report available (see artifacts) ✅" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "Mochawesome report missing ⚠️" >> $GITHUB_STEP_SUMMARY
+          fi
