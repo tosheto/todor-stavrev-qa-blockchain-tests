@@ -116,14 +116,13 @@ Install dev tooling for linting, formatting, Solidity rules and test reports:
     
 ## 🧪 Reports & Coverage
 
-HTML test report (Mochawesome):
-npm run test:report → reports/mocha/index.html
-Published automatically to GitHub Pages:
-https://tosheto.github.io/todor-stavrev-qa-blockchain-tests/
+- HTML test report (Mochawesome):
+- npm run test:report → reports/mocha/index.html
+- Published automatically to GitHub Pages: https://tosheto.github.io/todor-stavrev-qa-blockchain-tests/
 
-Solidity coverage:
-npm run coverage → coverage/ (HTML, JSON, LCOV)
-CI uploads artifacts and sends to Codecov.
+- Solidity coverage:
+- npm run coverage → coverage/ (HTML, JSON, LCOV)
+- CI uploads artifacts and sends to Codecov.
 
 ## 🚀 Tech Stack
 - Solidity (v0.8.20)
