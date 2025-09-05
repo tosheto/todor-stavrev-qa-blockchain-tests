@@ -1,6 +1,6 @@
 # 🧪 todor-stavrev-qa-blockchain-tests
 
-Smart contract QA project using **Hardhat**, **TypeScript**, **Chai** and **TypeChain** for manual and automated testing.  
+Smart contract QA project using **Hardhat**, **TypeScript**, **Chai** and **TypeChain** for automated and manual testing.  
 Includes a sample **ERC20 smart contract**, deployment script, and unit tests with gas usage metrics.
 
 ---
