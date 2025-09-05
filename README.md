@@ -72,7 +72,17 @@ Includes a sample **ERC20 smart contract**, deployment script, and unit tests wi
 3. **Run Tests** 
     ```bash
     npm test
-4. **Deploy Locally (Hardhat network)** 
+    
+4. **Generate Mochawesome HTML report** 
+    ```bash
+    npm run test:report
+
+5. **Run Solidity Coverage** 
+    ```bash
+    npm run coverage
+    → Output: coverage/ + upload to Codecov in CI
+    
+6. **Deploy Locally (Hardhat network)** 
     ```bash
     npx hardhat run scripts/deploy.ts
 
