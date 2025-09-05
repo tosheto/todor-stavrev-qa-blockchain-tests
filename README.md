@@ -30,13 +30,13 @@ Includes a sample **ERC20 smart contract**, deployment script, and unit tests wi
    ```bash
    npm install
 
-## ⚡ Compile Contracts
+2. **Compile Contracts** 
     ```bash
-     npx hardhat compile
+    npx hardhat compile
 
-## ⚡ Run Tests
+3. **Run Tests** 
     ```bash
-     npm test
+    npm test
 ## ⚡ Deploy Locally (Hardhat network)
     ```bash
       npx hardhat run scripts/deploy.ts
