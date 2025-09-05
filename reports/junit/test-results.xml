@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="0.272" tests="3" failures="0">
+  <testsuite name="" timestamp="2025-09-05T11:34:59" tests="0" time="0.000" failures="0">
+    <properties>
+      <property name="artifactVersion" value="1.0.0"/>
+    </properties>
+  </testsuite>
+  <testsuite name="All Tests ExampleToken" timestamp="2025-09-05T11:34:59" tests="3" file="C:\Users\Toshimoto\Desktop\blockchain-qa-template\test\ExampleToken.spec.ts" time="0.268" failures="0">
+    <properties>
+      <property name="artifactVersion" value="1.0.0"/>
+    </properties>
+    <testcase name="ExampleToken mints only by owner" time="0.114" classname="mints only by owner">
+    </testcase>
+    <testcase name="ExampleToken reverts mint from non-owner" time="0.099" classname="reverts mint from non-owner">
+    </testcase>
+    <testcase name="ExampleToken pauses transfers" time="0.047" classname="pauses transfers">
+    </testcase>
+  </testsuite>
+</testsuites>

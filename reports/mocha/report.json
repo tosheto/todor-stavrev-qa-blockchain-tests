@@ -1,0 +1,146 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 3,
+    "passes": 3,
+    "pending": 0,
+    "failures": 0,
+    "testsRegistered": 3,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false,
+    "start": "2025-09-05T11:34:59.140Z",
+    "end": "2025-09-05T11:34:59.412Z",
+    "duration": 272
+  },
+  "results": [
+    {
+      "uuid": "23e540b8-1587-47b8-b75a-5e41e9ae9e34",
+      "title": "",
+      "fullFile": "C:\\Users\\Toshimoto\\Desktop\\blockchain-qa-template\\test\\ExampleToken.spec.ts",
+      "file": "\\test\\ExampleToken.spec.ts",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "4c989b7f-dc4f-428d-9593-89e30defdc9b",
+          "title": "ExampleToken",
+          "fullFile": "C:\\Users\\Toshimoto\\Desktop\\blockchain-qa-template\\test\\ExampleToken.spec.ts",
+          "file": "\\test\\ExampleToken.spec.ts",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "mints only by owner",
+              "fullTitle": "ExampleToken mints only by owner",
+              "timedOut": false,
+              "duration": 114,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const [, user] = await hardhat_1.ethers.getSigners();\nconst Token = await hardhat_1.ethers.getContractFactory(\"ExampleToken\");\nconst token = await Token.deploy(hardhat_1.ethers.parseUnits(\"1000000\")); // maxSupply\nawait token.mint(user.address, 100n);\n(0, chai_1.expect)(await token.totalSupply()).to.equal(100n);\n(0, chai_1.expect)(await token.balanceOf(user.address)).to.equal(100n);",
+              "err": {},
+              "uuid": "213d309f-0483-4291-a19b-76cac0503c2b",
+              "parentUUID": "4c989b7f-dc4f-428d-9593-89e30defdc9b",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "reverts mint from non-owner",
+              "fullTitle": "ExampleToken reverts mint from non-owner",
+              "timedOut": false,
+              "duration": 99,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const [, user] = await hardhat_1.ethers.getSigners();\nconst Token = await hardhat_1.ethers.getContractFactory(\"ExampleToken\");\nconst token = await Token.deploy(hardhat_1.ethers.parseUnits(\"1000000\"));\nawait (0, chai_1.expect)(token.connect(user).mint(user.address, 1n)).to.be.reverted;",
+              "err": {},
+              "uuid": "20d8f8c1-8708-4bfc-b634-008c686d4664",
+              "parentUUID": "4c989b7f-dc4f-428d-9593-89e30defdc9b",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "pauses transfers",
+              "fullTitle": "ExampleToken pauses transfers",
+              "timedOut": false,
+              "duration": 47,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const [, user1, user2] = await hardhat_1.ethers.getSigners();\nconst Token = await hardhat_1.ethers.getContractFactory(\"ExampleToken\");\nconst token = await Token.deploy(1000n);\nawait token.mint(user1.address, 100n);\nawait token.pause();\nawait (0, chai_1.expect)(token.connect(user1).transfer(user2.address, 1n)).to.be.reverted;",
+              "err": {},
+              "uuid": "b8cfeac7-4c66-4d5c-9c88-dc38217e9e2b",
+              "parentUUID": "4c989b7f-dc4f-428d-9593-89e30defdc9b",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "213d309f-0483-4291-a19b-76cac0503c2b",
+            "20d8f8c1-8708-4bfc-b634-008c686d4664",
+            "b8cfeac7-4c66-4d5c-9c88-dc38217e9e2b"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 260,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 40000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 40000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "10.8.2"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": true,
+        "reportFilename": "report",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "id": "default",
+        "reportDir": "reports/mocha",
+        "reportFilename": "report",
+        "quiet": true,
+        "overwrite": true,
+        "html": true,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}
