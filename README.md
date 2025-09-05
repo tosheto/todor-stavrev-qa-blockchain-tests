@@ -1,4 +1,3 @@
-
 # 🧪 todor-stavrev-qa-blockchain-tests
 
 <div align="center">
@@ -18,9 +17,10 @@
 > **▶ Live Test Report:** → https://tosheto.github.io/todor-stavrev-qa-blockchain-tests/
 
 Smart contract QA project using **Hardhat**, **TypeScript**, **Chai** and **TypeChain** for automated and manual testing.  
-Includes a sample **ERC20 smart contract**, deployment script, and unit tests with gas usage metrics.
+Includes a sample **ERC20 smart contract**, deployment script, linting setup, and CI/CD integration.
 
 ---
+
 ## 📸 Screenshots
 
 ### ✅ Passing tests
@@ -29,6 +29,7 @@ Includes a sample **ERC20 smart contract**, deployment script, and unit tests wi
 ### 📊 Gas usage report
 ![Gas Report](docs/screenshots/gas-report.png)
 
+---
 
 ## 🚀 Features
 - Hardhat setup with TypeScript support  
@@ -36,14 +37,16 @@ Includes a sample **ERC20 smart contract**, deployment script, and unit tests wi
 - Unit tests with Chai + Hardhat Chai Matchers  
 - Type-safe contract interactions via TypeChain  
 - Gas usage and deployment cost reporting  
-- **Mochawesome** test reports with HTML + JSON output  
-- **Coverage reports** (HTML, LCOV, JSON) via `solidity-coverage`  
-- Automatic coverage upload to **Codecov**  
-- **GitHub Pages** publishing of live test reports  
-- Ready-to-use **CI/CD workflows**:
-  - ✅ Tests
-  - ✅ Coverage + Codecov upload
-  - ✅ CodeQL security scan
+- **Mochawesome** test reports (HTML + JSON) auto-published to GitHub Pages  
+- **Coverage reports** (HTML, LCOV, JSON) via `solidity-coverage` + Codecov upload  
+- **ESLint + Prettier** for TypeScript/JavaScript linting & formatting  
+- **Solhint** for Solidity linting (with Prettier plugin)  
+- **Husky + lint-staged** pre-commit hooks for auto-lint/format  
+- **Cross-platform build commands** using `shx`  
+- Ready-to-use **GitHub Actions workflows**:
+  - ✅ Tests  
+  - ✅ Coverage + Codecov upload  
+  - ✅ CodeQL security scan  
   - ✅ GitHub Pages deploy of Mochawesome report  
 
 ---
@@ -54,6 +57,7 @@ Includes a sample **ERC20 smart contract**, deployment script, and unit tests wi
 - `test/` → Automated tests in TypeScript  
 - `typechain-types/` → Auto-generated TypeChain typings  
 - `reports/` → Test + coverage outputs (Mochawesome, LCOV, JUnit)  
+- `.husky/` → Git hooks for linting (pre-commit)  
 - `.github/workflows/` → CI/CD workflows for GitHub Actions  
 - `hardhat.config.ts` → Hardhat configuration  
 
@@ -85,6 +89,31 @@ Includes a sample **ERC20 smart contract**, deployment script, and unit tests wi
 6. **Deploy Locally (Hardhat network)** 
     ```bash
     npx hardhat run scripts/deploy.ts
+    
+## 🛠️ Development Setup
+
+Install dev tooling for linting, formatting, Solidity rules and test reports:
+
+# ---- Test report tooling (Mochawesome) ----
+npm i -D mochawesome@7 mochawesome-merge@4 mochawesome-report-generator@6 \
+         mocha-junit-reporter mocha-multi-reporters
+
+# For cross-platform shell (mkdir/cp on Windows)
+npm i -D shx
+
+# ---- Linting & formatting (TS/JS) ----
+npm i -D eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin \
+         prettier eslint-config-prettier eslint-plugin-prettier
+
+# ---- Git hooks (run linters before commit) ----
+npm i -D husky lint-staged
+npx husky init
+echo "npx lint-staged" >> .husky/pre-commit
+
+# ---- Solidity linting ----
+npm i -D solhint solhint-plugin-prettier
+npx solhint --init
+
 
 ## 🚀 Tech Stack
 -  Solidity (v0.8.20)
