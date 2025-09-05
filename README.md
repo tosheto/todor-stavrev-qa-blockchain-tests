@@ -31,5 +31,6 @@ Includes a sample **ERC20 smart contract**, deployment script, and unit tests wi
    npm install
 
 ## ⚡ Compile Contracts
+   ```bash
    npx hardhat compile
 
