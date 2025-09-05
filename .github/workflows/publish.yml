@@ -17,6 +17,7 @@ concurrency:
 jobs:
   test-and-report:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -28,7 +29,7 @@ jobs:
           cache: npm
 
       - name: Install deps
-        run: npm install
+        run: npm ci
 
       - name: Run tests (produce mochawesome JSON)
         run: npm test
@@ -38,7 +39,6 @@ jobs:
           mkdir -p reports/mocha
           npx mochawesome-merge "reports/mocha/*.json" -o reports/mocha/report.json
           npx marge reports/mocha/report.json -f report -d reports/mocha
-          # направи index.html за GitHub Pages
           cp reports/mocha/report.html reports/mocha/index.html
 
       - name: Upload artifact for Pages
@@ -49,4 +49,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deploy
         uses: actions/deploy-pages@v4
-
