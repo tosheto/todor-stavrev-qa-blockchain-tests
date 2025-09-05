@@ -123,18 +123,19 @@ Install dev tooling for linting, formatting, Solidity rules and test reports:
 - Solidity coverage:
 - npm run coverage → coverage/ (HTML, JSON, LCOV)
 - CI uploads artifacts and sends to Codecov.
+  
 ## 🤖 CI/CD Workflows
 
-'ci.yml' → install, build, run tests (status badge in README)
+`ci.yml` → install, build, run tests (status badge in README)
 
-'coverage.yml' → run 'solidity-coverage', upload artifacts, upload to Codecov
+`coverage.yml` → run `solidity-coverage`, upload artifacts, upload to Codecov
 
-'codeql.yml' → CodeQL static analysis
+`codeql.yml` → CodeQL static analysis
 
-'publish.yml' → build + deploy Mochawesome HTML report to GitHub Pages
+`publish.ymlж → build + deploy Mochawesome HTML report to GitHub Pages
 
-To enable Codecov uploads: add repository secret 'CODECOV_TOKEN' in
-'Settings → Secrets and variables → Actions'.
+To enable Codecov uploads: add repository secret `CODECOV_TOKEN` in
+`Settings → Secrets and variables → Actions`.
 
 ## 🚀 Tech Stack
 - Solidity (v0.8.20)
