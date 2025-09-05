@@ -10,6 +10,9 @@ jobs:
   coverage:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: read
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -25,8 +28,8 @@ jobs:
 
       - name: Run Solidity coverage
         run: npm run coverage
-        # by default solidity-coverage generates:
-        #   coverage/ (HTML) + coverage/lcov.info + coverage.json
+        # By default solidity-coverage generates:
+        # coverage/ (HTML) + coverage/lcov.info + coverage.json
 
       - name: Upload coverage artifacts (HTML + JSON + LCOV)
         uses: actions/upload-artifact@v4
@@ -37,28 +40,30 @@ jobs:
             coverage.json
             coverage/lcov.info
 
-      # --- Codecov upload ---
       - name: Upload to Codecov
         uses: codecov/codecov-action@v4
         with:
-          files: coverage/lcov.info, coverage.json
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: |
+            coverage/lcov.info
+            coverage.json
           flags: solidity,hardhat
           name: solidity-coverage
           fail_ci_if_error: true
           verbose: true
-          # For private repo add secret CODECOV_TOKEN adn uncomment the row:
-          # token: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Publish coverage summary
+        shell: bash
         run: |
-          echo "## ✅ Solidity Coverage Report" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## ✅ Solidity Coverage Report" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
           if [ -f coverage.json ]; then
-            echo "\`\`\`json" >> $GITHUB_STEP_SUMMARY
-            head -n 50 coverage.json >> $GITHUB_STEP_SUMMARY
-            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-            echo "_Full HTML report is available in the uploaded artifact ‘solidity-coverage’._" >> $GITHUB_STEP_SUMMARY
+            echo '```json' >> "$GITHUB_STEP_SUMMARY"
+            head -n 50 coverage.json >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+            echo "_Full HTML report is available in the uploaded artifact 'solidity-coverage'._" >> "$GITHUB_STEP_SUMMARY"
           else
-            echo "_coverage.json not found; see artifact ‘solidity-coverage’ for full HTML report._" >> $GITHUB_STEP_SUMMARY
+            echo "_coverage.json not found; see artifact 'solidity-coverage' for full HTML report._" >> "$GITHUB_STEP_SUMMARY"
+            echo "⚠️ coverage.json not found!" >> "$GITHUB_STEP_SUMMARY"
           fi
