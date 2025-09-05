@@ -1,4 +1,10 @@
-# 🧪 todor-stavrev-qa-blockchain-tests 
+
+# 🧪 todor-stavrev-qa-blockchain-tests
+
+<div align="center">
+
+[![Live Test Report](https://img.shields.io/badge/▶%20Live%20Test%20Report-Open%20now-blueviolet?logo=githubpages&logoColor=white)](https://tosheto.github.io/todor-stavrev-qa-blockchain-tests/)
+
 ![CI](https://github.com/tosheto/todor-stavrev-qa-blockchain-tests/actions/workflows/ci.yml/badge.svg)
 [![Coverage](https://github.com/tosheto/todor-stavrev-qa-blockchain-tests/actions/workflows/coverage.yml/badge.svg?branch=main)](https://github.com/tosheto/todor-stavrev-qa-blockchain-tests/actions/workflows/coverage.yml)
 ![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
@@ -6,11 +12,12 @@
 ![Hardhat](https://img.shields.io/badge/hardhat-2.26.x-yellow)
 ![CodeQL](https://github.com/tosheto/todor-stavrev-qa-blockchain-tests/actions/workflows/codeql.yml/badge.svg)
 
-<div align="center">
-
-[![Live Test Report](https://img.shields.io/badge/▶%20Live%20Test%20Report-Open%20now-blueviolet?logo=githubpages&logoColor=white)](https://tosheto.github.io/todor-stavrev-qa-blockchain-tests/)
-
 </div>
+
+> [!IMPORTANT]
+> **▶ Live Test Report:** Виж резултатите **на живо** → https://tosheto.github.io/todor-stavrev-qa-blockchain-tests/
+
+Smart contract QA project using **Hardhat**, **TypeScript**, **Chai** and **TypeChain** …
 
 
 Smart contract QA project using **Hardhat**, **TypeScript**, **Chai** and **TypeChain** for automated and manual testing.  
