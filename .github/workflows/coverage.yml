@@ -20,7 +20,7 @@ jobs:
           node-version: 20
           cache: npm
 
-      - name: Install deps
+      - name: Install dependencies
         run: npm ci
 
       - name: Run Solidity coverage
@@ -36,12 +36,14 @@ jobs:
 
       - name: Publish coverage summary
         run: |
-          echo "## Solidity Coverage" >> $GITHUB_STEP_SUMMARY
+          echo "## ✅ Solidity Coverage Report" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           if [ -f coverage.json ]; then
             echo "\`\`\`json" >> $GITHUB_STEP_SUMMARY
-            head -n 200 coverage.json >> $GITHUB_STEP_SUMMARY
+            head -n 50 coverage.json >> $GITHUB_STEP_SUMMARY
             echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "_Full HTML report is available in the uploaded artifact ‘solidity-coverage’._" >> $GITHUB_STEP_SUMMARY
           else
             echo "_coverage.json not found; see artifact ‘solidity-coverage’ for full HTML report._" >> $GITHUB_STEP_SUMMARY
           fi
