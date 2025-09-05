@@ -84,7 +84,6 @@ Includes a sample **ERC20 smart contract**, deployment script, linting setup, an
 5. **Run Solidity Coverage** 
     ```bash
     npm run coverage
-    → Output: coverage/ + upload to Codecov in CI
     
 6. **Deploy Locally (Hardhat network)** 
     ```bash
@@ -110,7 +109,6 @@ Install dev tooling for linting, formatting, Solidity rules and test reports:
     npm i -D husky lint-staged
     npx husky init
     
-    echo "npx lint-staged" >> .husky/pre-commit
 5. **Solidity linting** 
     ```bash
    npm i -D solhint solhint-plugin-prettier
