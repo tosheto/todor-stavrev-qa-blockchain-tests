@@ -94,7 +94,7 @@ Includes a sample **ERC20 smart contract**, deployment script, linting setup, an
 
 Install dev tooling for linting, formatting, Solidity rules and test reports:
 
-1. **Test report tooling (Mochawesome) **
+1. **Test report tooling (Mochawesome)**
    ```bash
    npm i -D mochawesome@7 mochawesome-merge@4 mochawesome-report-generator@6 \
          mocha-junit-reporter mocha-multi-reporters
@@ -109,18 +109,35 @@ Install dev tooling for linting, formatting, Solidity rules and test reports:
     ```bash
     npm i -D husky lint-staged
     npx husky init
+    
     echo "npx lint-staged" >> .husky/pre-commit
 5. **Solidity linting** 
     ```bash
    npm i -D solhint solhint-plugin-prettier
    npx solhint --init
+    
+## 🧪 Reports & Coverage
+
+HTML test report (Mochawesome):
+npm run test:report → reports/mocha/index.html
+Published automatically to GitHub Pages:
+https://tosheto.github.io/todor-stavrev-qa-blockchain-tests/
+
+Solidity coverage:
+npm run coverage → coverage/ (HTML, JSON, LCOV)
+CI uploads artifacts and sends to Codecov.
 
 ## 🚀 Tech Stack
--  Solidity (v0.8.20)
--  Hardhat (with toolbox)
--  TypeScript
--  Chai + Hardhat Chai Matchers
--  TypeChain (ethers v6 bindings)
+- Solidity (v0.8.20)
+- Hardhat (with toolbox)
+- TypeScript
+- Chai + Hardhat Chai Matchers
+- TypeChain (ethers v6 bindings)
+- ESLint + Prettier
+- Solhint + Prettier plugin
+- Husky + lint-staged
+- Mochawesome reporting
+- GitHub Actions CI/CD
 
 ## 📂 License
 -  This project is licensed under the MIT License.
