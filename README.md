@@ -94,11 +94,12 @@ Includes a sample **ERC20 smart contract**, deployment script, linting setup, an
 
 Install dev tooling for linting, formatting, Solidity rules and test reports:
 
-# ---- Test report tooling (Mochawesome) ----
-npm i -D mochawesome@7 mochawesome-merge@4 mochawesome-report-generator@6 \
+## Test report tooling (Mochawesome) 
+    ```bash
+     npm i -D mochawesome@7 mochawesome-merge@4 mochawesome-report-generator@6 \
          mocha-junit-reporter mocha-multi-reporters
 
-# For cross-platform shell (mkdir/cp on Windows)
+## For cross-platform shell (mkdir/cp on Windows)
 npm i -D shx
 
 # ---- Linting & formatting (TS/JS) ----
