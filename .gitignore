@@ -11,6 +11,7 @@ typechain-types/
 
 # Coverage reports
 coverage/
+coverage.json
 
 # Build outputs
 dist/
