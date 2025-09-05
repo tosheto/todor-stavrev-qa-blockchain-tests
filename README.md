@@ -114,28 +114,23 @@ Install dev tooling for linting, formatting, Solidity rules and test reports:
    npm i -D solhint solhint-plugin-prettier
    npx solhint --init
     
- 🧪 Reports & Coverage
+## 🧪 Reports & Coverage
 
 - HTML test report (Mochawesome):
 - npm run test:report → reports/mocha/index.html
 - Published automatically to GitHub Pages: https://tosheto.github.io/todor-stavrev-qa-blockchain-tests/
-
 - Solidity coverage:
 - npm run coverage → coverage/ (HTML, JSON, LCOV)
 - CI uploads artifacts and sends to Codecov.
   
 ## 🤖 CI/CD Workflows
 
-`ci.yml` → install, build, run tests (status badge in README)
-
-`coverage.yml` → run `solidity-coverage`, upload artifacts, upload to Codecov
-
-`codeql.yml` → CodeQL static analysis
-
-`publish.ymlж → build + deploy Mochawesome HTML report to GitHub Pages
-
-To enable Codecov uploads: add repository secret `CODECOV_TOKEN` in
-`Settings → Secrets and variables → Actions`.
+- `ci.yml` → install, build, run tests (status badge in README)
+- `coverage.yml` → run `solidity-coverage`, upload artifacts, upload to Codecov
+- `codeql.yml` → CodeQL static analysis
+- `publish.yml` → build + deploy Mochawesome HTML report to GitHub Pages
+- To enable Codecov uploads: add repository secret `CODECOV_TOKEN` in
+  `Settings → Secrets and variables → Actions`.
 
 ## 🚀 Tech Stack
 - Solidity (v0.8.20)
