@@ -19,6 +19,28 @@
 Smart contract QA project using **Hardhat**, **TypeScript**, **Chai** and **TypeChain** for automated and manual testing.  
 Includes a sample **ERC20 smart contract**, deployment script, linting setup, and CI/CD integration.
 
+## 🧪 Test Suite Overview
+
+The project includes a robust ERC-20 test suite designed to be constructor-agnostic and decimals-agnostic, so it runs across typical ERC-20 variants without manual tweaks.
+
+### ✅ What we cover
+- **Core transfers**: positive transfers, zero-amount transfers, self-transfer (net-zero effect), revert on over-spend, revert to zero address.  
+- **Allowances**: `approve` emits `Approval`, `transferFrom` spends allowance and moves funds, supports both **direct overwrite** and **“zero-first”** overwrite patterns.  
+- **Events**: `Transfer`/`Approval` emission and basic log parsing smoke test.  
+- **Invariants (fuzz)**: randomized valid transfers preserve `totalSupply` at all times.
+
+### 📊 Test Matrix
+| Area                     | What it checks                                                            | Cases |
+|--------------------------|---------------------------------------------------------------------------:|------:|
+| Core transfers           | happy path, zero, self, over-spend revert, zero-address revert            | 7     |
+| Allowances               | approve, transferFrom, overwrite or zero-first                            | 4     |
+| Events                   | `Transfer` topic presence (log parsing smoke)                             | 1     |
+| Property-based (fuzz)    | randomized transfers, **supply invariant**                                | 1     |
+| Existing project tests   | your original tests                                                        | 3     |
+**Total**: **15** tests (11 core + 1 fuzz + 3 existing)
+
+> **Live HTML report:** [▶ Open Live Test Report](https://tosheto.github.io/todor-stavrev-qa-blockchain-tests/)
+
 ---
 
 ## 📸 Screenshots
@@ -41,13 +63,11 @@ Includes a sample **ERC20 smart contract**, deployment script, linting setup, an
 - **Coverage reports** (HTML, LCOV, JSON) via `solidity-coverage` + Codecov upload  
 - **ESLint + Prettier** for TypeScript/JavaScript linting & formatting  
 - **Solhint** for Solidity linting (with Prettier plugin)  
-- **Husky + lint-staged** pre-commit hooks for auto-lint/format  
-- **Cross-platform build commands** using `shx`  
-- Ready-to-use **GitHub Actions workflows**:
-  - ✅ Tests  
-  - ✅ Coverage + Codecov upload  
-  - ✅ CodeQL security scan  
-  - ✅ GitHub Pages deploy of Mochawesome report  
+- **Husky + lint-staged** pre-commit hooks  
+- **Constructor-agnostic & decimals-agnostic test suite** (works across common ERC-20 variants)  
+- **Allowance overwrite safety** (supports “zero-first” pattern as well as direct overwrite)  
+- **Property-based fuzzing** for supply invariants  
+- Ready-to-use **GitHub Actions**: Tests, Coverage + Codecov, CodeQL, Pages deploy
 
 ---
 
