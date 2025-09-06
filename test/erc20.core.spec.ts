@@ -3,22 +3,37 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import type { ExampleToken } from "../typechain-types";
 
-// Helper: deploy while trying a few constructor signatures
+/** Deploys ExampleToken by trying several constructor signatures safely. */
 async function deployToken(): Promise<ExampleToken> {
   const Factory = await ethers.getContractFactory("ExampleToken");
   const F = Factory as any;
-  let token: ExampleToken;
 
-  try {
-    token = (await F.deploy("ExampleToken", "EXT", 1_000_000n)) as ExampleToken;
-  } catch {
+  // Try most common signatures in order
+  const candidates: any[][] = [
+    ["ExampleToken", "EXT", 1_000_000n], // (name, symbol, initialSupply)
+    ["ExampleToken", "EXT"],            // (name, symbol)
+    [1_000_000n],                       // (initialSupply)
+    [],                                 // ()
+  ];
+
+  let lastErr: unknown = new Error("No matching constructor");
+  for (const args of candidates) {
     try {
-      token = (await F.deploy("ExampleToken", "EXT")) as ExampleToken;
-    } catch {
-      token = (await F.deploy()) as ExampleToken;
+      const token = (await F.deploy(...args)) as ExampleToken;
+      return token;
+    } catch (e) {
+      lastErr = e;
     }
   }
-  return token;
+  throw lastErr;
+}
+
+/** Picks a safe transfer amount based on a balance. */
+function pickAmount(balance: bigint, prefer: bigint = 1_000n): bigint {
+  if (balance <= 1n) return 1n;
+  const cap = balance / 10n; // keep <=10% of balance
+  const chosen = prefer < cap ? prefer : cap;
+  return chosen > 0n ? chosen : 1n;
 }
 
 describe("ExampleToken — core behavior", () => {
@@ -29,7 +44,7 @@ describe("ExampleToken — core behavior", () => {
     [deployer, alice, bob] = await ethers.getSigners();
     token = await deployToken();
 
-    // Ensure deployer has a starting balance if the contract exposes mint()
+    // Ensure deployer has some balance (if the contract exposes mint()).
     const tAny = token as any;
     const me = await deployer.getAddress();
     const bal = await token.balanceOf(me);
@@ -53,114 +68,119 @@ describe("ExampleToken — core behavior", () => {
   });
 
   it("transfer moves balance and emits Transfer", async () => {
-    const amount = 1_000n; // raw units, decimals-agnostic
-    await expect(token.transfer(await alice.getAddress(), amount))
-      .to.emit(token, "Transfer")
-      .withArgs(await deployer.getAddress(), await alice.getAddress(), amount);
+    const from = await deployer.getAddress();
+    const to = await alice.getAddress();
+    const fromBal = await token.balanceOf(from);
+    const amount = pickAmount(fromBal, 1_000n);
 
-    expect(await token.balanceOf(await alice.getAddress())).to.equal(amount);
+    await expect(token.transfer(to, amount))
+      .to.emit(token, "Transfer")
+      .withArgs(from, to, amount);
+
+    expect(await token.balanceOf(to)).to.equal(amount);
   });
 
   it("transfer 0 works and emits", async () => {
-    const amount = 0n;
-    await expect(token.transfer(await alice.getAddress(), amount))
+    const to = await alice.getAddress();
+    await expect(token.transfer(to, 0n))
       .to.emit(token, "Transfer")
-      .withArgs(await deployer.getAddress(), await alice.getAddress(), amount);
+      .withArgs(await deployer.getAddress(), to, 0n);
   });
 
   it("self-transfer keeps net balance the same and emits", async () => {
     const me = await deployer.getAddress();
     const before = await token.balanceOf(me);
-    const amount = 10n;
+    const amount = pickAmount(before, 10n);
+
     await expect(token.transfer(me, amount))
       .to.emit(token, "Transfer")
       .withArgs(me, me, amount);
+
     const after = await token.balanceOf(me);
     expect(after).to.equal(before);
   });
 
   it("reverts when transferring more than balance", async () => {
-    const aBal = await token.balanceOf(await alice.getAddress());
+    const a = await alice.getAddress();
+    const b = await bob.getAddress();
+
+    const aBal = await token.balanceOf(a);
     const amount = aBal + 1n;
-    await expect(
-      token.connect(alice).transfer(await bob.getAddress(), amount)
-    ).to.be.reverted;
+
+    await expect(token.connect(alice).transfer(b, amount)).to.be.reverted;
   });
 
   it("reverts when transferring to the zero address", async () => {
-    const amount = 1n;
+    const from = await deployer.getAddress();
+    const fromBal = await token.balanceOf(from);
+    const amount = pickAmount(fromBal, 1n);
     await expect(token.transfer(ethers.ZeroAddress, amount)).to.be.reverted;
   });
 
   it("approve sets allowance and emits Approval", async () => {
+    const spender = await alice.getAddress();
     const amount = 5_000n;
-    await expect(token.approve(await alice.getAddress(), amount))
-      .to.emit(token, "Approval")
-      .withArgs(await deployer.getAddress(), await alice.getAddress(), amount);
 
-    expect(
-      await token.allowance(await deployer.getAddress(), await alice.getAddress())
-    ).to.equal(amount);
+    await expect(token.approve(spender, amount))
+      .to.emit(token, "Approval")
+      .withArgs(await deployer.getAddress(), spender, amount);
+
+    expect(await token.allowance(await deployer.getAddress(), spender)).to.equal(
+      amount
+    );
   });
 
   it("transferFrom consumes allowance and moves funds", async () => {
-    const amount = 777n;
-    await token.approve(await alice.getAddress(), amount);
+    const owner = await deployer.getAddress();
+    const spender = await alice.getAddress();
+    const to = await bob.getAddress();
 
-    await expect(
-      token
-        .connect(alice)
-        .transferFrom(
-          await deployer.getAddress(),
-          await bob.getAddress(),
-          amount
-        )
-    )
+    const ownerBal = await token.balanceOf(owner);
+    const amount = pickAmount(ownerBal, 777n);
+
+    await token.approve(spender, amount);
+
+    await expect(token.connect(alice).transferFrom(owner, to, amount))
       .to.emit(token, "Transfer")
-      .withArgs(await deployer.getAddress(), await bob.getAddress(), amount);
+      .withArgs(owner, to, amount);
 
-    expect(
-      await token.allowance(await deployer.getAddress(), await alice.getAddress())
-    ).to.equal(0n);
-    expect(await token.balanceOf(await bob.getAddress())).to.equal(amount);
+    expect(await token.allowance(owner, spender)).to.equal(0n);
+    expect(await token.balanceOf(to)).to.equal(amount);
   });
 
   it("approve overwrite OR zero-first pattern (both accepted)", async () => {
     const spender = await alice.getAddress();
-    const ten = 10n;
-    const one = 1n;
 
-    // set initial allowance
-    await token.approve(spender, ten);
+    await token.approve(spender, 10n);
 
     let overwriteWorked = true;
     try {
-      // try direct overwrite
-      await token.approve(spender, one);
+      await token.approve(spender, 1n);
     } catch {
       overwriteWorked = false;
     }
 
     if (!overwriteWorked) {
-      // some impls require zeroing first
       await token.approve(spender, 0n);
-      await token.approve(spender, one);
+      await token.approve(spender, 1n);
     }
 
-    expect(
-      await token.allowance(await deployer.getAddress(), spender)
-    ).to.equal(1n);
+    expect(await token.allowance(await deployer.getAddress(), spender)).to.equal(
+      1n
+    );
   });
 
   it("logs include Transfer event (topic parsing smoke test)", async () => {
-    const amount = 42n;
+    const from = await deployer.getAddress();
+    const fromBal = await token.balanceOf(from);
+    const amount = pickAmount(fromBal, 42n);
+
     await token.transfer(await alice.getAddress(), amount);
     const tx = await token
       .connect(alice)
       .transfer(await bob.getAddress(), amount);
     const rc = await tx.wait();
 
-    // ethers v6: parse logs using the contract interface
     const iface = (token as any).interface;
     const found = (rc?.logs ?? []).some((log: any) => {
       try {

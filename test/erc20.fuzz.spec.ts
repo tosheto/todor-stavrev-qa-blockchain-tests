@@ -8,13 +8,22 @@ async function deployTokenForFuzz(): Promise<ExampleToken> {
   const Factory = await ethers.getContractFactory("ExampleToken");
   const F = Factory as any;
 
-  let token: ExampleToken;
-  try {
-    token = (await F.deploy()) as ExampleToken; // 0-arg constructor
-  } catch {
-    token = (await F.deploy("ExampleToken", "EXT")) as ExampleToken; // (name, symbol)
+  const candidates: any[][] = [
+    ["ExampleToken", "EXT", 100_000n],
+    ["ExampleToken", "EXT"],
+    [100_000n],
+    [],
+  ];
+
+  let lastErr: unknown = new Error("No matching constructor");
+  for (const args of candidates) {
+    try {
+      return (await F.deploy(...args)) as ExampleToken;
+    } catch (e) {
+      lastErr = e;
+    }
   }
-  return token;
+  throw lastErr;
 }
 
 describe("ExampleToken — fuzzed transfers", () => {
@@ -25,12 +34,12 @@ describe("ExampleToken — fuzzed transfers", () => {
     [deployer, a1, a2] = await ethers.getSigners();
     token = await deployTokenForFuzz();
 
-    // Ensure deployer has a starting balance
+    // Ensure deployer has balance; mint if available and needed
     const tAny = token as any;
     const me = await deployer.getAddress();
     const bal = await token.balanceOf(me);
     if (bal === 0n && tAny.mint) {
-      await tAny.mint(me, 100_000n); // raw units
+      await tAny.mint(me, 100_000n);
     } else {
       expect(await token.balanceOf(me)).to.be.gt(0n);
     }
@@ -41,7 +50,7 @@ describe("ExampleToken — fuzzed transfers", () => {
 
     await fc.assert(
       fc.asyncProperty(
-        fc.integer({ min: 1, max: 50 }), // up to 50 steps
+        fc.integer({ min: 1, max: 50 }),
         async (steps) => {
           for (let i = 0; i < steps; i++) {
             const from = i % 2 === 0 ? deployer : a1;
