@@ -23,7 +23,7 @@ Includes a sample **ERC20 smart contract**, deployment script, linting setup, an
 
 The project includes a robust ERC-20 test suite designed to be constructor-agnostic and decimals-agnostic, so it runs across typical ERC-20 variants without manual tweaks.
 
-### ✅ What we cover
+### ✅ What I am covering 
 - **Core transfers**: positive transfers, zero-amount transfers, self-transfer (net-zero effect), revert on over-spend, revert to zero address.  
 - **Allowances**: `approve` emits `Approval`, `transferFrom` spends allowance and moves funds, supports both **direct overwrite** and **“zero-first”** overwrite patterns.  
 - **Events**: `Transfer`/`Approval` emission and basic log parsing smoke test.  
