@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "build": "hardhat compile",
-    "test": "hardhat test",
-    "test:report": "shx rm -rf reports/mocha docs && hardhat test && mochawesome-merge \"reports/mocha/raw/*.json\" > reports/mocha/merged.json && marge reports/mocha/merged.json -o docs -f index",
+   "test": "hardhat test",
+    "test:report": "shx rm -rf reports mochawesome-report docs && hardhat test \"test/**/*.spec.ts\" && npx mochawesome-merge \"reports/**/*.json\" > reports/merged.json && npx marge reports/merged.json -o docs -f index",
     "coverage": "hardhat coverage",
     "lint:sol": "solhint 'contracts/**/*.sol'",
     "lint:sol:fix": "solhint 'contracts/**/*.sol' --fix",
