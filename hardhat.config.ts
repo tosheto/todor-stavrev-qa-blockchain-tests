@@ -32,10 +32,10 @@ const config: HardhatUserConfig = {
   },
 
   mocha: {
+    require: ["@cspotcode/source-map-support/register"],
     reporter: "mocha-multi-reporters",
-    // Use a shared external config so local runs and CI stay in sync
     reporterOptions: { configFile: "mocha-multi.json" },
-    timeout: 600000, // generous for CI
+    timeout: 600000,
   },
 };
 
