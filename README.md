@@ -133,14 +133,6 @@ Install dev tooling for linting, formatting, Solidity rules and test reports:
     ```bash
    npm i -D solhint solhint-plugin-prettier
    npx solhint --init
-
-### 🧪 Run locally
-```bash
-npx hardhat compile
-npx hardhat test --bail
-# or focus the new suites only:
-# npx hardhat test --grep "ExampleToken —"
-
     
 ## 🧪 Reports & Coverage
 
