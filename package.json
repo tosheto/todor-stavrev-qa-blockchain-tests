@@ -5,7 +5,7 @@
   "scripts": {
     "build": "hardhat compile",
     "test": "hardhat test",
-    "test:report": "shx mkdir -p reports/mocha && mochawesome-merge \"reports/mocha/*.json\" -o reports/mocha/report.json && marge reports/mocha/report.json -f report -d reports/mocha",
+    "test:report": "shx rm -rf reports/mocha docs && hardhat test && mochawesome-merge \"reports/mocha/raw/*.json\" > reports/mocha/merged.json && marge reports/mocha/merged.json -o docs -f index",
     "coverage": "hardhat coverage",
     "lint:sol": "solhint 'contracts/**/*.sol'",
     "lint:sol:fix": "solhint 'contracts/**/*.sol' --fix",
