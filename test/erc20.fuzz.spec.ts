@@ -10,7 +10,7 @@ async function deployTokenForFuzz(): Promise<ExampleToken> {
 
   let token: ExampleToken;
   try {
-    token = (await F.deploy()) as ExampleToken; // 0-arg.
+    token = (await F.deploy()) as ExampleToken; // 0-arg constructor
   } catch {
     token = (await F.deploy("ExampleToken", "EXT")) as ExampleToken; // (name, symbol)
   }
@@ -20,23 +20,19 @@ async function deployTokenForFuzz(): Promise<ExampleToken> {
 describe("ExampleToken — fuzzed transfers", () => {
   let token: ExampleToken;
   let deployer: any, a1: any, a2: any;
-  const DECIMALS = 18;
 
   beforeEach(async () => {
     [deployer, a1, a2] = await ethers.getSigners();
     token = await deployTokenForFuzz();
 
-    // Generates initial balance for deployer, if there is mint()
+    // Ensure deployer has a starting balance
     const tAny = token as any;
-    const initial = ethers.parseUnits("100000", DECIMALS);
-    if (tAny.mint) {
-      const bal = await token.balanceOf(await deployer.getAddress());
-      if (bal === 0n) {
-        await tAny.mint(await deployer.getAddress(), initial);
-      }
+    const me = await deployer.getAddress();
+    const bal = await token.balanceOf(me);
+    if (bal === 0n && tAny.mint) {
+      await tAny.mint(me, 100_000n); // raw units
     } else {
-      const bal = await token.balanceOf(await deployer.getAddress());
-      expect(bal).to.be.gt(0n);
+      expect(await token.balanceOf(me)).to.be.gt(0n);
     }
   });
 
@@ -45,7 +41,7 @@ describe("ExampleToken — fuzzed transfers", () => {
 
     await fc.assert(
       fc.asyncProperty(
-        fc.integer({ min: 1, max: 50 }), // until 50 steps
+        fc.integer({ min: 1, max: 50 }), // up to 50 steps
         async (steps) => {
           for (let i = 0; i < steps; i++) {
             const from = i % 2 === 0 ? deployer : a1;
@@ -54,18 +50,16 @@ describe("ExampleToken — fuzzed transfers", () => {
             const fromBal = await token.balanceOf(await from.getAddress());
             if (fromBal === 0n) continue;
 
-            // amount ∈ [1, fromBal]
             const raw = fc.sample(fc.integer({ min: 1, max: 1000 }), 1)[0];
             const amount = (BigInt(raw) % fromBal) + 1n;
 
             await token.connect(from).transfer(await to.getAddress(), amount);
 
-            // Invariant: totalSupply is constant
             expect(await token.totalSupply()).to.equal(totalBefore);
           }
         }
       ),
-      { numRuns: 10 } // short, but enough for smoke
+      { numRuns: 10 }
     );
   });
 });
