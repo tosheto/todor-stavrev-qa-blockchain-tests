@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "build": "hardhat compile",
-   "test": "hardhat test",
-    "test:report": "shx rm -rf reports mochawesome-report docs && hardhat test \"test/**/*.spec.ts\" && npx mochawesome-merge \"reports/**/*.json\" > reports/merged.json && npx marge reports/merged.json -o docs -f index",
+    "test": "hardhat test",
+    "test:report": "shx rm -rf reports mochawesome-report docs && hardhat test && npx mochawesome-merge \"reports/**/*.json\" > reports/merged.json && npx marge reports/merged.json -o docs -f index",
     "coverage": "hardhat coverage",
     "lint:sol": "solhint 'contracts/**/*.sol'",
     "lint:sol:fix": "solhint 'contracts/**/*.sol' --fix",
@@ -23,6 +23,7 @@
     "dotenv": "^17.2.2"
   },
   "devDependencies": {
+    "@cspotcode/source-map-support": "^0.8.1",
     "@nomicfoundation/hardhat-toolbox": "^6.1.0",
     "@typechain/ethers-v6": "^0.5.1",
     "@typechain/hardhat": "^9.1.0",
