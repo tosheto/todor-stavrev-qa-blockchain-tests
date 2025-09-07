@@ -75,6 +75,9 @@ it("should revert if transfer amount exceeds balance", async () => {
 ### 📊 Gas usage report
 ![Gas Report](./docs/screenshots/gas-report.png)
 
+### 🧮 Coverage report
+![Coverage Report](./docs/screenshots/coverage-report.png)
+
 ---
 
 ## 🚀 Features
