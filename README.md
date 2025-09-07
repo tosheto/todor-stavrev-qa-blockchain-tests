@@ -71,10 +71,11 @@ it("should revert if transfer amount exceeds balance", async () => {
 ## 📸 Screenshots
 
 ### ✅ Passing tests
-![Tests Screenshot](./docs/screenshots/tests-passing.png)
+![Tests Screenshot](https://raw.githubusercontent.com/tosheto/todor-stavrev-qa-blockchain-tests/main/docs/screenshots/tests-passing.png)
 
 ### 📊 Gas usage report
-![Gas Report](./docs/screenshots/gas-report.png)
+![Gas Report](https://raw.githubusercontent.com/tosheto/todor-stavrev-qa-blockchain-tests/main/docs/screenshots/gas-report.png)
+
 
 ---
 
