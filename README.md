@@ -71,10 +71,10 @@ it("should revert if transfer amount exceeds balance", async () => {
 ## 📸 Screenshots
 
 ### ✅ Passing tests
-![Tests Screenshot](docs/screenshots/tests-passing.png)
+![Tests Screenshot](./docs/screenshots/tests-passing.png)
 
 ### 📊 Gas usage report
-![Gas Report](docs/screenshots/gas-report.png)
+![Gas Report](./docs/screenshots/gas-report.png)
 
 ---
 
