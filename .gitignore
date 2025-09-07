@@ -38,3 +38,16 @@ pnpm-debug.log*
 # OS
 .DS_Store
 Thumbs.db
+
+# --- Docs exceptions: allow screenshots and videos ---
+!docs/
+!docs/screenshots/
+!docs/screenshots/*.png
+!docs/screenshots/*.jpg
+!docs/screenshots/*.jpeg
+!docs/screenshots/*.gif
+
+!docs/videos/
+!docs/videos/*.mp4
+!docs/videos/*.webm
+!docs/videos/*.mov
