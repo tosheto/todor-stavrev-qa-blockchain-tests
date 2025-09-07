@@ -57,17 +57,6 @@ This means you can drop in *any* ERC-20 contract and the suite will still valida
 
 ---
 
-### 🔍 Example Test (excerpt)
-
-```ts
-it("should revert if transfer amount exceeds balance", async () => {
-  const { token, alice, bob } = await loadFixture(deployTokenFixture);
-  await expect(token.connect(alice).transfer(bob.address, 999999))
-    .to.be.revertedWith("ERC20: transfer amount exceeds balance");
-});
-
-
----
 
 
 ## 📸 Screenshots
