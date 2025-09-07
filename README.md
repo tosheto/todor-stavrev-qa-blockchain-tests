@@ -78,6 +78,11 @@ it("should revert if transfer amount exceeds balance", async () => {
 ### 🧮 Coverage report
 ![Coverage Report](./docs/screenshots/coverage-report.png)
 
+### 🎥 Demo video
+[![Demo Video](./docs/screenshots/tests-passing.png)](./docs/videos/demo.mp4)
+
+<video src="./docs/videos/demo.mp4" controls width="600"></video>
+
 ---
 
 ## 🚀 Features
