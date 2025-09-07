@@ -64,6 +64,7 @@ it("should revert if transfer amount exceeds balance", async () => {
   await expect(token.connect(alice).transfer(bob.address, 999999))
     .to.be.revertedWith("ERC20: transfer amount exceeds balance");
 });
+```
 ---
 
 
