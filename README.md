@@ -19,27 +19,52 @@
 Smart contract QA project using **Hardhat**, **TypeScript**, **Chai** and **TypeChain** for automated and manual testing.  
 Includes a sample **ERC20 smart contract**, deployment script, linting setup, and CI/CD integration.
 
+---
+
 ## 🧪 Test Suite Overview
 
-The project includes a robust ERC-20 test suite designed to be constructor-agnostic and decimals-agnostic, so it runs across typical ERC-20 variants without manual tweaks.
+The project ships with a **constructor-agnostic and decimals-agnostic ERC-20 test suite**.  
+This means you can drop in *any* ERC-20 contract and the suite will still validate its core logic without manual tweaks.
 
-### ✅ What I am covering 
-- **Core transfers**: positive transfers, zero-amount transfers, self-transfer (net-zero effect), revert on over-spend, revert to zero address.  
-- **Allowances**: `approve` emits `Approval`, `transferFrom` spends allowance and moves funds, supports both **direct overwrite** and **“zero-first”** overwrite patterns.  
-- **Events**: `Transfer`/`Approval` emission and basic log parsing smoke test.  
-- **Invariants (fuzz)**: randomized valid transfers preserve `totalSupply` at all times.
+### ✅ Coverage
+- **Core Transfers**
+  - happy path transfer
+  - transfer of `0` tokens
+  - self-transfer (net-zero effect)
+  - revert on overspend
+  - revert on transfer to zero address  
+- **Allowances**
+  - `approve` emits `Approval`
+  - `transferFrom` deducts allowance and transfers funds
+  - overwrite allowance directly
+  - overwrite allowance with “zero-first” pattern  
+- **Events**
+  - `Transfer` and `Approval` event emission  
+- **Invariants (Fuzz)**
+  - randomized valid transfers always preserve `totalSupply`  
 
 ### 📊 Test Matrix
-| Area                     | What it checks                                                            | Cases |
-|--------------------------|---------------------------------------------------------------------------:|------:|
-| Core transfers           | happy path, zero, self, over-spend revert, zero-address revert            | 7     |
-| Allowances               | approve, transferFrom, overwrite or zero-first                            | 4     |
-| Events                   | `Transfer` topic presence (log parsing smoke)                             | 1     |
-| Property-based (fuzz)    | randomized transfers, **supply invariant**                                | 1     |
-| Existing project tests   | your original tests                                                        | 3     |
-**Total**: **15** tests (11 core + 1 fuzz + 3 existing)
 
-> **Live HTML report:** [▶ Open Live Test Report](https://tosheto.github.io/todor-stavrev-qa-blockchain-tests/)
+| Area                  | What it checks                                             | Cases |
+|-----------------------|------------------------------------------------------------|------:|
+| Core transfers        | happy, zero, self, overspend revert, zero-address revert   | 7     |
+| Allowances            | approve, transferFrom, overwrite, zero-first overwrite     | 4     |
+| Events                | `Transfer` + `Approval` events                            | 1     |
+| Property-based (fuzz) | randomized transfers → supply invariant                    | 1     |
+| Existing project      | baseline example tests                                     | 3     |
+
+**Total**: **16+ tests** (11 core + 1 fuzz + 3 baseline + future extensions)
+
+---
+
+### 🔍 Example Test (excerpt)
+
+```ts
+it("should revert if transfer amount exceeds balance", async () => {
+  const { token, alice, bob } = await loadFixture(deployTokenFixture);
+  await expect(token.connect(alice).transfer(bob.address, 999999))
+    .to.be.revertedWith("ERC20: transfer amount exceeds balance");
+});
 
 ---
 
