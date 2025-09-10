@@ -24,12 +24,22 @@ const config: HardhatUserConfig = {
 
   networks: {
     hardhat: {},
+    sepolia: {
+      url: process.env.SEPOLIA_RPC_URL || "",
+      accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
+    },
   },
 
   typechain: {
     outDir: "typechain-types",
     target: "ethers-v6",
   },
+
+  etherscan: {
+  apiKey: {
+    sepolia: process.env.ETHERSCAN_API_KEY || "",
+  },
+},
 
   mocha: {
     require: ["@cspotcode/source-map-support/register"],
